@@ -84,7 +84,8 @@ func WithExcludeTombstone() GetStoreOption {
 type tsoRequest struct {
 	start    time.Time
 	ctx      context.Context
-	done     chan error
+	err      error
+	wg       sync.WaitGroup
 	physical int64
 	logical  int64
 }
@@ -489,7 +490,7 @@ func (c *client) finishTSORequest(requests []*tsoRequest, physical, firstLogical
 			span.Finish()
 		}
 		requests[i].physical, requests[i].logical = physical, firstLogical+int64(i)
-		requests[i].done <- err
+		requests[i].wg.Done()
 	}
 }
 
@@ -497,7 +498,8 @@ func (c *client) revokeTSORequest(err error) {
 	n := len(c.tsoRequests)
 	for i := 0; i < n; i++ {
 		req := <-c.tsoRequests
-		req.done <- err
+		req.err = err
+		req.wg.Done()
 	}
 }
 
@@ -546,24 +548,16 @@ func (c *client) GetURLs() []string {
 	return c.urls
 }
 
-var tsoReqPool = sync.Pool{
-	New: func() interface{} {
-		return &tsoRequest{
-			done: make(chan error, 1),
-		}
-	},
-}
-
 func (c *client) GetTSAsync(ctx context.Context) TSFuture {
 	if span := opentracing.SpanFromContext(ctx); span != nil {
 		span = opentracing.StartSpan("GetTSAsync", opentracing.ChildOf(span.Context()))
 		ctx = opentracing.ContextWithSpan(ctx, span)
 	}
-	req := tsoReqPool.Get().(*tsoRequest)
-	req.start = time.Now()
-	req.ctx = ctx
-	req.physical = 0
-	req.logical = 0
+	req := &tsoRequest{
+		start: time.Now(),
+		ctx:   ctx,
+	}
+	req.wg.Add(1)
 	c.tsoRequests <- req
 
 	return req
@@ -579,20 +573,10 @@ func (req *tsoRequest) Wait() (physical int64, logical int64, err error) {
 	// If tso command duration is observed very high, the reason could be it
 	// takes too long for Wait() be called.
 	cmdDuration.WithLabelValues("tso_async_wait").Observe(time.Since(req.start).Seconds())
-	select {
-	case err = <-req.done:
-		err = errors.WithStack(err)
-		defer tsoReqPool.Put(req)
-		if err != nil {
-			cmdFailedDuration.WithLabelValues("tso").Observe(time.Since(req.start).Seconds())
-			return 0, 0, err
-		}
-		physical, logical = req.physical, req.logical
-		cmdDuration.WithLabelValues("tso").Observe(time.Since(req.start).Seconds())
-		return
-	case <-req.ctx.Done():
-		return 0, 0, errors.WithStack(req.ctx.Err())
-	}
+	req.wg.Wait()
+	err = req.err
+	physical, logical = req.physical, req.logical
+	return
 }
 
 func (c *client) GetTS(ctx context.Context) (physical int64, logical int64, err error) {
