@@ -491,6 +491,7 @@ func (c *clusterInfo) handleRegionHeartbeat(region *core.RegionInfo) error {
 	return nil
 }
 
+// zjl_debug
 func (c *clusterInfo) updateRegionsLabelLevelStats(regions []*core.RegionInfo) {
 	c.Lock()
 	defer c.Unlock()
@@ -499,6 +500,7 @@ func (c *clusterInfo) updateRegionsLabelLevelStats(regions []*core.RegionInfo) {
 	}
 }
 
+// zjl_debug
 func (c *clusterInfo) collectMetrics() {
 	if c.regionStats == nil {
 		return
