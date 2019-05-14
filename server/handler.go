@@ -316,6 +316,8 @@ func (h *Handler) AddTransferLeaderOperator(regionID uint64, storeID uint64) err
 }
 
 // AddTransferRegionOperator adds an operator to transfer region to the stores.
+// zjl_debug to_specify
+// here do not check label
 func (h *Handler) AddTransferRegionOperator(regionID uint64, storeIDs map[uint64]struct{}) error {
 	c, err := h.getCoordinator()
 	if err != nil {

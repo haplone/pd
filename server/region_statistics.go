@@ -22,6 +22,7 @@ import (
 
 type regionStatisticType uint32
 
+// zjl_debug important to_specify
 const (
 	missPeer regionStatisticType = 1 << iota
 	extraPeer
