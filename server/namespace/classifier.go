@@ -30,6 +30,7 @@ var DefaultClassifier = defaultClassifier{}
 
 // Classifier is used to determine the namespace which the store or region
 // belongs.
+// zjl_debug basic_concept schedule_concept
 type Classifier interface {
 	GetAllNamespaces() []string
 	GetStoreNamespace(*core.StoreInfo) string

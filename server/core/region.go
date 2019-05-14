@@ -419,6 +419,7 @@ func (rm *regionMap) TotalSize() int64 {
 }
 
 // RegionsInfo for export
+// zjl_debug basic_concept
 type RegionsInfo struct {
 	tree         *regionTree
 	regions      *regionMap            // regionID -> regionInfo
@@ -646,6 +647,7 @@ func (r *RegionsInfo) GetFollower(storeID uint64, regionID uint64) *RegionInfo {
 }
 
 // ScanRange scans region with start key, until number greater than limit.
+// zjl_debug to_specify
 func (r *RegionsInfo) ScanRange(startKey []byte, limit int) []*RegionInfo {
 	res := make([]*RegionInfo, 0, limit)
 	r.tree.scanRange(startKey, func(region *metapb.Region) bool {

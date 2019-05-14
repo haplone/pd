@@ -104,6 +104,7 @@ func (s *storeStatistics) Collect() {
 	}
 }
 
+// zjl_debug basic_concept important to_specify
 type storeStatisticsMap struct {
 	opt        *scheduleOption
 	classifier namespace.Classifier

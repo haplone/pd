@@ -51,6 +51,7 @@ const (
 )
 
 // Server is the pd server.
+// zjl_debug basic_concept
 type Server struct {
 	// Server state.
 	isServing int64
@@ -93,6 +94,7 @@ type Server struct {
 }
 
 // CreateServer creates the UNINITIALIZED pd server with given configuration.
+// zjl_debug starter
 func CreateServer(cfg *Config, apiRegister func(*Server) http.Handler) (*Server, error) {
 	log.Infof("PD config - %v", cfg)
 	rand.Seed(time.Now().UnixNano())

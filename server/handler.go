@@ -49,6 +49,7 @@ var (
 )
 
 // Handler is a helper to export methods to handle API/RPC requests.
+// zjl_debug basic_concept
 type Handler struct {
 	s   *Server
 	opt *scheduleOption

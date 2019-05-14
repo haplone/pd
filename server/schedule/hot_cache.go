@@ -213,6 +213,7 @@ func (w *HotSpotCache) CollectMetrics(stores *core.StoresInfo) {
 	hotCacheStatusGauge.WithLabelValues("hotThreshold", "read").Set(float64(threshold))
 }
 
+// zjl_debug important to_specify
 func (w *HotSpotCache) isRegionHot(id uint64, hotThreshold int) bool {
 	if stat, ok := w.writeFlow.Peek(id); ok {
 		if stat.(*core.RegionStat).HotDegree >= hotThreshold {

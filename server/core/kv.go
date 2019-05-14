@@ -37,6 +37,7 @@ const (
 )
 
 // KV wraps all kv operations, keep it stateless.
+// zjl_debug basic_concept
 type KV struct {
 	KVBase
 }

@@ -242,6 +242,7 @@ func (s *Server) GetAllStores(ctx context.Context, request *pdpb.GetAllStoresReq
 }
 
 // StoreHeartbeat implements gRPC PDServer.
+// zjl_debug important to_specify
 func (s *Server) StoreHeartbeat(ctx context.Context, request *pdpb.StoreHeartbeatRequest) (*pdpb.StoreHeartbeatResponse, error) {
 	if err := s.validateRequest(request.GetHeader()); err != nil {
 		return nil, errors.Trace(err)
@@ -255,6 +256,7 @@ func (s *Server) StoreHeartbeat(ctx context.Context, request *pdpb.StoreHeartbea
 		return &pdpb.StoreHeartbeatResponse{Header: s.notBootstrappedHeader()}, nil
 	}
 
+	// check store is tombstone status
 	if pberr := checkStore2(cluster, request.GetStats().GetStoreId()); pberr != nil {
 		return &pdpb.StoreHeartbeatResponse{
 			Header: s.errorHeader(pberr),

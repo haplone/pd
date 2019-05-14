@@ -25,6 +25,7 @@ func init() {
 	})
 }
 
+// zjl_debug important
 type labelScheduler struct {
 	*baseScheduler
 	selector schedule.Selector
@@ -56,6 +57,7 @@ func (s *labelScheduler) IsScheduleAllowed(cluster schedule.Cluster) bool {
 	return s.limiter.OperatorCount(schedule.OpLeader) < cluster.GetLeaderScheduleLimit()
 }
 
+// zjl_debug important to_specify
 func (s *labelScheduler) Schedule(cluster schedule.Cluster, opInfluence schedule.OpInfluence) []*schedule.Operator {
 	schedulerCounter.WithLabelValues(s.GetName(), "schedule").Inc()
 	stores := cluster.GetStores()

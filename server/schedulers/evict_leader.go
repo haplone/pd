@@ -35,6 +35,7 @@ func init() {
 	})
 }
 
+// evict 驱逐
 type evictLeaderScheduler struct {
 	*baseScheduler
 	name     string

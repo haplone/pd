@@ -25,6 +25,7 @@ import (
 )
 
 // HandleRegionHeartbeat processes RegionInfo reports from client.
+// zjl_debug important to_specify
 func (c *RaftCluster) HandleRegionHeartbeat(region *core.RegionInfo) error {
 	if err := c.cachedCluster.handleRegionHeartbeat(region); err != nil {
 		return errors.Trace(err)
@@ -40,6 +41,7 @@ func (c *RaftCluster) HandleRegionHeartbeat(region *core.RegionInfo) error {
 	return nil
 }
 
+// zjl_debug important to_specify
 func (c *RaftCluster) handleAskSplit(request *pdpb.AskSplitRequest) (*pdpb.AskSplitResponse, error) {
 	reqRegion := request.GetRegion()
 	startKey := reqRegion.GetStartKey()
@@ -77,6 +79,7 @@ func (c *RaftCluster) handleAskSplit(request *pdpb.AskSplitRequest) (*pdpb.AskSp
 	return split, nil
 }
 
+// zjl_debug important
 func (c *RaftCluster) checkSplitRegion(left *metapb.Region, right *metapb.Region) error {
 	if left == nil || right == nil {
 		return errors.New("invalid split region")

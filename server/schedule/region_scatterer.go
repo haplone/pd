@@ -60,6 +60,8 @@ func (s *selectedStores) newFilter() Filter {
 }
 
 // RegionScatterer scatters regions.
+// scatter 分散
+// zjl_debug basci_concept schedule_concept
 type RegionScatterer struct {
 	cluster    Cluster
 	classifier namespace.Classifier

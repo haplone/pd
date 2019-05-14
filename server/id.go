@@ -25,6 +25,7 @@ const (
 	allocStep = uint64(1000)
 )
 
+// zjl_debug basic_concept
 type idAllocator struct {
 	mu   sync.Mutex
 	base uint64

@@ -32,6 +32,7 @@ var (
 	errTxnFailed = errors.New("failed to commit transaction")
 )
 
+// zjl_debug basci_concept
 type etcdKVBase struct {
 	server   *Server
 	client   *clientv3.Client

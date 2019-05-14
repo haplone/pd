@@ -27,6 +27,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+// zjl_debug basic_concept
 type clusterInfo struct {
 	sync.RWMutex
 	*schedule.BasicCluster
@@ -83,6 +84,7 @@ func (c *clusterInfo) allocID() (uint64, error) {
 }
 
 // AllocPeer allocs a new peer on a store.
+// zjl_debug to_specify
 func (c *clusterInfo) AllocPeer(storeID uint64) (*metapb.Peer, error) {
 	peerID, err := c.allocID()
 	if err != nil {
@@ -199,6 +201,7 @@ func (c *clusterInfo) ScanRegions(startKey []byte, limit int) []*core.RegionInfo
 }
 
 // GetAdjacentRegions returns region's info that is adjacent with specific region
+// adjacent 相邻的,邻近的
 func (c *clusterInfo) GetAdjacentRegions(region *core.RegionInfo) (*core.RegionInfo, *core.RegionInfo) {
 	c.RLock()
 	defer c.RUnlock()
@@ -385,6 +388,7 @@ func (c *clusterInfo) updateStoreStatus(id uint64) {
 }
 
 // handleRegionHeartbeat updates the region information.
+// zjl_debug important to_specify
 func (c *clusterInfo) handleRegionHeartbeat(region *core.RegionInfo) error {
 	region = region.Clone()
 	c.RLock()

@@ -36,6 +36,7 @@ const (
 )
 
 // BasicCluster provides basic data member and interface for a tikv cluster.
+// zjl_debug basic_concept
 type BasicCluster struct {
 	Stores   *core.StoresInfo
 	Regions  *core.RegionsInfo
@@ -63,6 +64,7 @@ func NewOpInfluence(operators []*Operator, cluster Cluster) OpInfluence {
 }
 
 // OpInfluence records the influence of the cluster.
+// zjl_debug basic_concept to_specify
 type OpInfluence struct {
 	storesInfluence  map[uint64]*StoreInfluence
 	regionsInfluence map[uint64]*Operator

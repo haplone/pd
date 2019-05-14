@@ -25,6 +25,7 @@ import (
 )
 
 // scheduleOption is a wrapper to access the configuration safely.
+// zjl_debug basic_concept
 type scheduleOption struct {
 	v             atomic.Value
 	rep           *Replication

@@ -26,6 +26,7 @@ type ttlCacheItem struct {
 }
 
 // TTL is a cache that assigns TTL(Time-To-Live) for each items.
+// zjl_debug basic_concept
 type TTL struct {
 	sync.RWMutex
 

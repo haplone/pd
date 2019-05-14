@@ -26,6 +26,9 @@ import (
 )
 
 // StoreInfo contains information about a store.
+// zjl_debug basic_concept to_specify
+// store three statuses: up,offline,tombstone
+// what is weight for ? and only be set by user with http api?
 type StoreInfo struct {
 	*metapb.Store
 	Stats *pdpb.StoreStats
@@ -345,6 +348,7 @@ func (s *StoresInfo) SetStore(store *StoreInfo) {
 }
 
 // BlockStore block a StoreInfo with storeID
+// zjl_debug for_what
 func (s *StoresInfo) BlockStore(storeID uint64) error {
 	store, ok := s.stores[storeID]
 	if !ok {

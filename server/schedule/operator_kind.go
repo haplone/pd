@@ -20,6 +20,7 @@ import (
 )
 
 // OperatorKind is a bit field to identify operator types.
+// zjl_debug basic_concept schedule_concept
 type OperatorKind uint32
 
 // Flags for operators.

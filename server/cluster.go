@@ -37,6 +37,7 @@ const backgroundJobInterval = time.Minute
 // For cluster 1
 // store 1 -> /1/raft/s/1, value is metapb.Store
 // region 1 -> /1/raft/r/1, value is metapb.Region
+// zjl_debug basic_concept
 type RaftCluster struct {
 	sync.RWMutex
 
@@ -85,6 +86,7 @@ func (c *RaftCluster) loadClusterStatus() (*ClusterStatus, error) {
 	return &ClusterStatus{RaftBootstrapTime: t}, nil
 }
 
+// zjl_debug important starter
 func (c *RaftCluster) start() error {
 	c.Lock()
 	defer c.Unlock()
@@ -269,6 +271,7 @@ func (c *RaftCluster) GetAdjacentRegions(region *core.RegionInfo) (*core.RegionI
 }
 
 // UpdateStoreLabels updates a store's location labels.
+// zjl_debug important schedule_label
 func (c *RaftCluster) UpdateStoreLabels(storeID uint64, labels []*metapb.StoreLabel) error {
 	store := c.cachedCluster.GetStore(storeID)
 	if store == nil {
@@ -353,6 +356,9 @@ func (c *RaftCluster) RemoveStore(storeID uint64) error {
 // State transition:
 // Case 1: Up -> Tombstone (if force is true);
 // Case 2: Offline -> Tombstone.
+// zjl_debug store offline process:
+// 	* up -> offline -> tombstone
+// 	* by force up -> tombstone
 func (c *RaftCluster) BuryStore(storeID uint64, force bool) error {
 	c.Lock()
 	defer c.Unlock()
@@ -416,6 +422,9 @@ func (c *RaftCluster) SetStoreWeight(storeID uint64, leader, region float64) err
 	return c.cachedCluster.putStore(store)
 }
 
+// zjl_debug important
+// check whether store is offline or empty.
+// the empty check is careful, as maybe raft node is just to be leader, and data is not correct.
 func (c *RaftCluster) checkStores() {
 	cluster := c.cachedCluster
 	for _, store := range cluster.getMetaStores() {
@@ -433,6 +442,10 @@ func (c *RaftCluster) checkStores() {
 	}
 }
 
+// zjl_debug important
+// clean 2 kinds operator:
+// 	* merged region operator
+// 	* timeout operator
 func (c *RaftCluster) checkOperators() {
 	co := c.coordinator
 	for _, op := range co.getOperators() {
@@ -485,6 +498,7 @@ func (c *RaftCluster) collectMetrics() {
 	c.collectHealthStatus()
 }
 
+// check etcd members healthy
 func (c *RaftCluster) collectHealthStatus() {
 	client := c.s.GetClient()
 	members, err := GetMembers(client)

@@ -32,6 +32,7 @@ const (
 	learnerPeer
 )
 
+// zjl_debug basic_concept
 type regionStatistics struct {
 	opt        *scheduleOption
 	classifier namespace.Classifier
@@ -143,6 +144,7 @@ func (r *regionStatistics) Collect() {
 	regionStatusGauge.WithLabelValues("learner_peer_region_count").Set(float64(len(r.stats[learnerPeer])))
 }
 
+// zjl_debug basic_concept to_specify
 type labelLevelStatistics struct {
 	regionLabelLevelStats map[uint64]int
 	labelLevelCounter     map[int]int

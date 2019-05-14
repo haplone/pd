@@ -21,6 +21,7 @@ import (
 )
 
 // NamespaceChecker ensures region to go to the right place.
+// zjl_debug basic_concept schedule_concept
 type NamespaceChecker struct {
 	cluster    Cluster
 	filters    []Filter
@@ -96,6 +97,7 @@ func (n *NamespaceChecker) SelectBestPeerToRelocate(region *core.RegionInfo, tar
 }
 
 // SelectBestStoreToRelocate randomly returns the store to relocate
+// zjl_debug to_specify
 func (n *NamespaceChecker) SelectBestStoreToRelocate(region *core.RegionInfo, targets []*core.StoreInfo, filters ...Filter) uint64 {
 	newFilters := []Filter{
 		NewStateFilter(),

@@ -37,6 +37,7 @@ func init() {
 // 1. relation between a Name and several tables
 // 2. relation between a Name and several stores
 // It is used to bind tables with stores
+// zjl_debug basci_concept
 type Namespace struct {
 	ID       uint64          `json:"ID"`
 	Name     string          `json:"Name"`
@@ -88,6 +89,7 @@ func (ns *Namespace) AddStoreID(storeID uint64) {
 }
 
 // tableNamespaceClassifier implements Classifier interface
+// zjl_debug basci_concept
 type tableNamespaceClassifier struct {
 	sync.RWMutex
 	nsInfo  *namespacesInfo

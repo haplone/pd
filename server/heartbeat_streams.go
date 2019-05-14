@@ -27,6 +27,7 @@ import (
 
 const heartbeatStreamKeepAliveInterval = time.Minute
 
+// zjl_debug basic_concept
 type heartbeatStream interface {
 	Send(*pdpb.RegionHeartbeatResponse) error
 }
@@ -36,6 +37,7 @@ type streamUpdate struct {
 	stream  heartbeatStream
 }
 
+// zjl_debug basic_concept
 type heartbeatStreams struct {
 	wg        sync.WaitGroup
 	ctx       context.Context
@@ -61,6 +63,7 @@ func newHeartbeatStreams(clusterID uint64) *heartbeatStreams {
 	return hs
 }
 
+// zjl_debug to_specify
 func (s *heartbeatStreams) run() {
 	defer logutil.LogPanic()
 

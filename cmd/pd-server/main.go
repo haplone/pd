@@ -33,6 +33,7 @@ import (
 	_ "github.com/pingcap/pd/table"
 )
 
+// zjl_debug main_starter
 func main() {
 	cfg := server.NewConfig()
 	err := cfg.Parse(os.Args[1:])

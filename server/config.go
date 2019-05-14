@@ -33,6 +33,7 @@ import (
 )
 
 // Config is the pd server configuration.
+// zjl_debug basic_config
 type Config struct {
 	*flag.FlagSet `json:"-"`
 
@@ -154,6 +155,7 @@ const (
 	defaultPeerUrls            = "http://127.0.0.1:2380"
 	defualtInitialClusterState = embed.ClusterStateFlagNew
 
+	// zjl_debug important
 	// etcd use 100ms for heartbeat and 1s for election timeout.
 	// We can enlarge both a little to reduce the network aggression.
 	// now embed etcd use TickMs for heartbeat, we will update
@@ -350,6 +352,7 @@ func (c *Config) configFromFile(path string) error {
 }
 
 // ScheduleConfig is the schedule configuration.
+// zjl_debug basic_config
 type ScheduleConfig struct {
 	// If the snapshot count of one store is greater than this value,
 	// it will never be used as a source or target store.
@@ -366,6 +369,7 @@ type ScheduleConfig struct {
 	// a store will be considered to be down if it hasn't reported heartbeats.
 	MaxStoreDownTime typeutil.Duration `toml:"max-store-down-time,omitempty" json:"max-store-down-time"`
 	// LeaderScheduleLimit is the max coexist leader schedules.
+	// coexist 共存，和平共处
 	LeaderScheduleLimit uint64 `toml:"leader-schedule-limit,omitempty" json:"leader-schedule-limit"`
 	// RegionScheduleLimit is the max coexist region schedules.
 	RegionScheduleLimit uint64 `toml:"region-schedule-limit,omitempty" json:"region-schedule-limit"`
@@ -375,6 +379,7 @@ type ScheduleConfig struct {
 	MergeScheduleLimit uint64 `toml:"merge-schedule-limit,omitempty" json:"merge-schedule-limit"`
 	// TolerantSizeRatio is the ratio of buffer size for balance scheduler.
 	TolerantSizeRatio float64 `toml:"tolerant-size-ratio,omitempty" json:"tolerant-size-ratio"`
+	// zjl_debug to_specify
 	//
 	//      high space stage         transition stage           low space stage
 	//   |--------------------|-----------------------------|-------------------------|
@@ -477,6 +482,7 @@ type SchedulerConfig struct {
 	Disable bool     `toml:"disable" json:"disable"`
 }
 
+// zjl_debug important
 var defaultSchedulers = SchedulerConfigs{
 	{Type: "balance-region"},
 	{Type: "balance-leader"},
@@ -485,6 +491,7 @@ var defaultSchedulers = SchedulerConfigs{
 }
 
 // ReplicationConfig is the replication configuration.
+// zjl_debug basic_config
 type ReplicationConfig struct {
 	// MaxReplicas is the number of replicas for each region.
 	MaxReplicas uint64 `toml:"max-replicas,omitempty" json:"max-replicas"`
@@ -510,6 +517,7 @@ func (c *ReplicationConfig) adjust() {
 }
 
 // NamespaceConfig is to overwrite the global setting for specific namespace
+// zjl_debug basic_config important to_specify
 type NamespaceConfig struct {
 	// LeaderScheduleLimit is the max coexist leader schedules.
 	LeaderScheduleLimit uint64 `json:"leader-schedule-limit"`
@@ -575,6 +583,7 @@ type StoreLabel struct {
 }
 
 // LabelPropertyConfig is the config section to set properties to store labels.
+// zjl_debug basic_config
 type LabelPropertyConfig map[string][]StoreLabel
 
 func (c LabelPropertyConfig) clone() LabelPropertyConfig {

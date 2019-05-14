@@ -20,6 +20,7 @@ import (
 )
 
 // Selector is an interface to select source and target store to schedule.
+// zjl_debug basic_concept to_specify
 type Selector interface {
 	SelectSource(opt Options, stores []*core.StoreInfo, filters ...Filter) *core.StoreInfo
 	SelectTarget(opt Options, stores []*core.StoreInfo, filters ...Filter) *core.StoreInfo

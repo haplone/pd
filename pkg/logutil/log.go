@@ -51,6 +51,7 @@ type FileLogConfig struct {
 }
 
 // LogConfig serializes log related config in toml/json.
+// zjl_debug basic_config
 type LogConfig struct {
 	// Log level.
 	Level string `toml:"level" json:"level"`

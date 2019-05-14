@@ -27,6 +27,7 @@ import (
 const mergeBlockMarker = 0
 
 // MergeChecker ensures region to merge with adjacent region when size is small
+// zjl_debug basic_concept schedule_concept
 type MergeChecker struct {
 	cluster    Cluster
 	classifier namespace.Classifier

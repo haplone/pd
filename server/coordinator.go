@@ -31,6 +31,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+// zjl_debug important
 const (
 	runSchedulerCheckInterval = 3 * time.Second
 	collectFactor             = 0.8
@@ -48,6 +49,7 @@ var (
 	errSchedulerNotFound = errors.New("scheduler not found")
 )
 
+// zjl_debug basic_concept important
 type coordinator struct {
 	sync.RWMutex
 
@@ -87,6 +89,10 @@ func newCoordinator(cluster *clusterInfo, hbStreams *heartbeatStreams, classifie
 	}
 }
 
+// zjl_debug important to_specify
+// 1. get region's next step and send cmd
+// 2. check whether operator is finished
+// 3. check whether operator is timeout
 func (c *coordinator) dispatch(region *core.RegionInfo) {
 	// Check existed operator.
 	if op := c.getOperator(region.GetId()); op != nil {
@@ -110,6 +116,11 @@ func (c *coordinator) dispatch(region *core.RegionInfo) {
 	}
 }
 
+// zjl_debug important to_specify
+// 1. scan regions by key
+// 2. check whether region already has operator, if if has continue;
+// 3. check region:
+// 4. update region label level stats ?
 func (c *coordinator) patrolRegions() {
 	defer logutil.LogPanic()
 
@@ -156,6 +167,10 @@ func (c *coordinator) patrolRegions() {
 	}
 }
 
+// 1. check raft learner
+// 2. check namespace ?
+// 3. check replica
+// 4. check region merge
 func (c *coordinator) checkRegion(region *core.RegionInfo) bool {
 	// If PD has restarted, it need to check learners added before and promote them.
 	// Don't check isRaftLearnerEnabled cause it may be disable learner feature but still some learners to promote.
@@ -196,6 +211,7 @@ func (c *coordinator) checkRegion(region *core.RegionInfo) bool {
 	return false
 }
 
+// zjl_debug schedule_run important
 func (c *coordinator) run() {
 	ticker := time.NewTicker(runSchedulerCheckInterval)
 	defer ticker.Stop()
@@ -411,6 +427,7 @@ func (c *coordinator) removeScheduler(name string) error {
 	return nil
 }
 
+// zjl_debug important
 func (c *coordinator) runScheduler(s *scheduleController) {
 	defer logutil.LogPanic()
 	defer c.wg.Done()
@@ -426,6 +443,7 @@ func (c *coordinator) runScheduler(s *scheduleController) {
 			if !s.AllowSchedule() {
 				continue
 			}
+			// zjl_debug to_specify
 			opInfluence := schedule.NewOpInfluence(c.getOperators(), c.cluster)
 			if op := s.Schedule(c.cluster, opInfluence); op != nil {
 				c.addOperator(op...)
@@ -647,6 +665,7 @@ func (c *coordinator) sendScheduleCommand(region *core.RegionInfo, step schedule
 	}
 }
 
+// zjl_debug basic_concept schedule_concept
 type scheduleController struct {
 	schedule.Scheduler
 	cluster      *clusterInfo

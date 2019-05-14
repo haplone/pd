@@ -21,6 +21,7 @@ import (
 )
 
 // Filter is an interface to filter source and target store.
+// zjl_debug basic_concept to_specify
 type Filter interface {
 	// Return true if the store should not be used as a source store.
 	FilterSource(opt Options, store *core.StoreInfo) bool

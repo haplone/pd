@@ -21,6 +21,7 @@ import (
 )
 
 // ReplicaChecker ensures region has the best replicas.
+// zjl_debug basic_concept schedule_concept
 type ReplicaChecker struct {
 	cluster    Cluster
 	classifier namespace.Classifier
@@ -121,6 +122,7 @@ func (r *ReplicaChecker) selectBestPeerToAddReplica(region *core.RegionInfo, fil
 }
 
 // selectBestStoreToAddReplica returns the store to add a replica.
+// zjl_debug to_specify
 func (r *ReplicaChecker) selectBestStoreToAddReplica(region *core.RegionInfo, filters ...Filter) (uint64, float64) {
 	// Add some must have filters.
 	newFilters := []Filter{

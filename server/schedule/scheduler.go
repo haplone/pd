@@ -55,6 +55,7 @@ type Cluster interface {
 }
 
 // Scheduler is an interface to schedule resources.
+// zjl_debug basic_concept schedule_concept important
 type Scheduler interface {
 	GetName() string
 	// GetType should in accordance with the name passing to schedule.RegisterScheduler()
@@ -70,6 +71,7 @@ type Scheduler interface {
 // CreateSchedulerFunc is for creating scheudler.
 type CreateSchedulerFunc func(limiter *Limiter, args []string) (Scheduler, error)
 
+// zjl_debug important to_specify
 var schedulerMap = make(map[string]CreateSchedulerFunc)
 
 // RegisterScheduler binds a scheduler creator. It should be called in init()
@@ -91,6 +93,7 @@ func CreateScheduler(name string, limiter *Limiter, args ...string) (Scheduler, 
 }
 
 // Limiter a counter that limits the number of operators
+// zjl_debug basic_concept schedule_concept
 type Limiter struct {
 	sync.RWMutex
 	counts map[OperatorKind]uint64

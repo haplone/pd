@@ -23,6 +23,7 @@ import (
 
 // namespaceCluster is part of a global cluster that contains stores and regions
 // within a specific namespace.
+// zjl_debug basci_concept
 type namespaceCluster struct {
 	schedule.Cluster
 	classifier namespace.Classifier
