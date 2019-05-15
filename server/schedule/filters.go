@@ -220,6 +220,7 @@ func (f *storageThresholdFilter) FilterTarget(opt Options, store *core.StoreInfo
 }
 
 // distinctScoreFilter ensures that distinct score will not decrease.
+// zjl_debug important to_specify
 type distinctScoreFilter struct {
 	labels    []string
 	stores    []*core.StoreInfo

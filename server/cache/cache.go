@@ -18,6 +18,7 @@ import (
 )
 
 // Cache is an interface for cache system
+// zjl_debug basic_concept
 type Cache interface {
 	// Put puts an item into cache.
 	Put(key uint64, value interface{})

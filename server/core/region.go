@@ -37,6 +37,7 @@ func HealthRegion() RegionOption {
 }
 
 // RegionInfo records detail region info.
+// zjl_debug basic_concept
 type RegionInfo struct {
 	*metapb.Region
 	Learners        []*metapb.Peer

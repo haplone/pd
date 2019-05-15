@@ -110,10 +110,12 @@ const minWeight = 1e-6
 const maxScore = 1024 * 1024 * 1024
 
 // LeaderScore returns the store's leader score: leaderSize / leaderWeight.
+// zjl_debug important to_remember
 func (s *StoreInfo) LeaderScore(delta int64) float64 {
 	return float64(s.LeaderSize+delta) / math.Max(s.LeaderWeight, minWeight)
 }
 
+// zjl_debug important to_remember to_specify
 // RegionScore returns the store's region score.
 func (s *StoreInfo) RegionScore(highSpaceRatio, lowSpaceRatio float64, delta int64) float64 {
 	var score float64
