@@ -14,6 +14,7 @@
 package schedule
 
 import (
+	"github.com/sirupsen/logrus"
 	"math/rand"
 	"time"
 
@@ -37,6 +38,7 @@ type HotSpotCache struct {
 }
 
 func newHotSpotCache() *HotSpotCache {
+	logrus.Infof("new HotSpotCache")
 	return &HotSpotCache{
 		writeFlow: cache.NewCache(statCacheMaxLen, cache.TwoQueueCache),
 		readFlow:  cache.NewCache(statCacheMaxLen, cache.TwoQueueCache),
@@ -215,6 +217,7 @@ func (w *HotSpotCache) CollectMetrics(stores *core.StoresInfo) {
 
 // zjl_debug important to_specify
 func (w *HotSpotCache) isRegionHot(id uint64, hotThreshold int) bool {
+	logrus.Infof("check region[%d] is hot[%d] to_specify", id, hotThreshold)
 	if stat, ok := w.writeFlow.Peek(id); ok {
 		if stat.(*core.RegionStat).HotDegree >= hotThreshold {
 			return true

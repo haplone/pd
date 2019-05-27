@@ -14,6 +14,7 @@
 package core
 
 import (
+	"github.com/sirupsen/logrus"
 	"math"
 	"sync/atomic"
 
@@ -87,6 +88,7 @@ type MockIDAllocator struct {
 
 // NewMockIDAllocator create a new MockIDAllocator
 func NewMockIDAllocator() *MockIDAllocator {
+	logrus.Infof("new MockIDAllocator")
 	return &MockIDAllocator{base: 0}
 }
 

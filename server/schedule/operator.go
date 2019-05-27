@@ -430,6 +430,7 @@ func CreateRemovePeerOperator(desc string, cluster Cluster, kind OperatorKind, r
 
 // CreateMovePeerOperator creates an Operator that replaces an old peer with a new peer.
 func CreateMovePeerOperator(desc string, cluster Cluster, region *core.RegionInfo, kind OperatorKind, oldStore, newStore uint64, peerID uint64) (*Operator, error) {
+	log.Infof("prepare to move peer[%d],desc[%s],kind[%s] for region[%s], from store[%d] to store[%d]", peerID, desc, kind.String(), region, oldStore, newStore)
 	removeKind, steps, err := removePeerSteps(cluster, region, oldStore, append(getRegionFollowerIDs(region), newStore))
 	if err != nil {
 		return nil, err

@@ -18,6 +18,7 @@ import (
 	"github.com/pingcap/pd/server/core"
 	"github.com/pingcap/pd/server/namespace"
 	log "github.com/sirupsen/logrus"
+	"reflect"
 )
 
 // Filter is an interface to filter source and target store.
@@ -27,6 +28,12 @@ type Filter interface {
 	FilterSource(opt Options, store *core.StoreInfo) bool
 	// Return true if the store should not be used as a target store.
 	FilterTarget(opt Options, store *core.StoreInfo) bool
+}
+
+func PFilters(fs []Filter) {
+	for _, f := range fs {
+		log.Infof("  filter: %s", reflect.TypeOf(f))
+	}
 }
 
 // FilterSource checks if store can pass all Filters as source store.

@@ -23,6 +23,7 @@ const replicaBaseScore = 100
 
 // DistinctScore returns the score that the other is distinct from the stores.
 // A higher score means the other store is more different from the existed stores.
+// code_analysis to_specify
 func DistinctScore(labels []string, stores []*core.StoreInfo, other *core.StoreInfo) float64 {
 	var score float64
 	for _, s := range stores {

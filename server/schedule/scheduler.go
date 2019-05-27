@@ -101,6 +101,7 @@ type Limiter struct {
 
 // NewLimiter create a schedule limiter
 func NewLimiter() *Limiter {
+	log.Infof("new Limiter")
 	return &Limiter{
 		counts: make(map[OperatorKind]uint64),
 	}
@@ -128,5 +129,6 @@ func (l *Limiter) OperatorCount(mask OperatorKind) uint64 {
 			total += count
 		}
 	}
+	log.Infof("Limiter check operator count [%s] [%d]", mask, total)
 	return total
 }

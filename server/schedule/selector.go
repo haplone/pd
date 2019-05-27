@@ -14,6 +14,7 @@
 package schedule
 
 import (
+	"github.com/sirupsen/logrus"
 	"math/rand"
 
 	"github.com/pingcap/pd/server/core"
@@ -156,6 +157,13 @@ func (s *randomSelector) Select(stores []*core.StoreInfo) *core.StoreInfo {
 }
 
 func (s *randomSelector) SelectSource(opt Options, stores []*core.StoreInfo, filters ...Filter) *core.StoreInfo {
+	if len(filters) > 0 {
+		logrus.Infof("randomSelector select source with extra filters:")
+		PFilters(filters)
+	} else {
+		logrus.Infof("randomSelector select source with no extra filters")
+	}
+
 	filters = append(filters, s.filters...)
 
 	var candidates []*core.StoreInfo
@@ -169,6 +177,12 @@ func (s *randomSelector) SelectSource(opt Options, stores []*core.StoreInfo, fil
 }
 
 func (s *randomSelector) SelectTarget(opt Options, stores []*core.StoreInfo, filters ...Filter) *core.StoreInfo {
+	if len(filters) > 0 {
+		logrus.Infof("randomSelector select target with extra filters:")
+		PFilters(filters)
+	} else {
+		logrus.Infof("randomSelector select target with no extra filters")
+	}
 	filters = append(filters, s.filters...)
 
 	var candidates []*core.StoreInfo

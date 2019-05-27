@@ -16,6 +16,7 @@ package core
 import (
 	"bytes"
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"math/rand"
 	"reflect"
 	"strings"
@@ -48,6 +49,14 @@ type RegionInfo struct {
 	WrittenBytes    uint64
 	ReadBytes       uint64
 	ApproximateSize int64
+}
+
+func (r RegionInfo) String() string {
+	var peers []string
+	for _, p := range r.Peers {
+		peers = append(peers, fmt.Sprintf("storeId[%d],id[%d]", p.StoreId, p.Id))
+	}
+	return fmt.Sprintf("RegionInfo: ID[%d],startKey[%s],endKey[%s],peers[%s]", r.Id, r.StartKey, r.EndKey, strings.Join(peers, ","))
 }
 
 // NewRegionInfo creates RegionInfo with region's meta and leader peer.
@@ -308,6 +317,7 @@ func (r *RegionInfo) GetDiffFollowers(other *RegionInfo) []*metapb.Peer {
 			res = append(res, p)
 		}
 	}
+	logrus.Infof("get different followers with r1[%s],r2[%s] is %s", r, other, res)
 	return res
 }
 
@@ -353,6 +363,7 @@ type regionEntry struct {
 }
 
 func newRegionMap() *regionMap {
+	logrus.Infof("new regionMap")
 	return &regionMap{
 		m:         make(map[uint64]*regionEntry),
 		totalSize: 0,
@@ -432,6 +443,7 @@ type RegionsInfo struct {
 
 // NewRegionsInfo creates RegionsInfo with tree, regions, leaders and followers
 func NewRegionsInfo() *RegionsInfo {
+	logrus.Infof("new RegionsInfo")
 	return &RegionsInfo{
 		tree:         newRegionTree(),
 		regions:      newRegionMap(),

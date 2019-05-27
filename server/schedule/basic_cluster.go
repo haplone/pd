@@ -16,6 +16,7 @@ package schedule
 import (
 	"github.com/juju/errors"
 	"github.com/pingcap/pd/server/core"
+	"github.com/sirupsen/logrus"
 )
 
 var (
@@ -45,6 +46,7 @@ type BasicCluster struct {
 
 // NewOpInfluence creates a OpInfluence.
 func NewOpInfluence(operators []*Operator, cluster Cluster) OpInfluence {
+	logrus.Infof("new OpInfluence by operators [%s]", operators)
 	influence := OpInfluence{
 		storesInfluence:  make(map[uint64]*StoreInfluence),
 		regionsInfluence: make(map[uint64]*Operator),
@@ -107,6 +109,7 @@ func (s StoreInfluence) ResourceSize(kind core.ResourceKind) int64 {
 
 // NewBasicCluster creates a BasicCluster.
 func NewBasicCluster() *BasicCluster {
+	logrus.Infof("----------------- new BasicCluster")
 	return &BasicCluster{
 		Stores:   core.NewStoresInfo(),
 		Regions:  core.NewRegionsInfo(),

@@ -330,6 +330,7 @@ type StoresInfo struct {
 
 // NewStoresInfo create a StoresInfo with map of storeID to StoreInfo
 func NewStoresInfo() *StoresInfo {
+	log.Infof(" new StoresInfo")
 	return &StoresInfo{
 		stores: make(map[uint64]*StoreInfo),
 	}

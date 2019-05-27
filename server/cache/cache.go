@@ -14,6 +14,7 @@
 package cache
 
 import (
+	"github.com/sirupsen/logrus"
 	"sync"
 )
 
@@ -106,6 +107,7 @@ func (c *threadSafeCache) Len() int {
 
 // NewCache create Cache instance by CacheType
 func NewCache(size int, cacheType Type) Cache {
+	logrus.Infof("new Cache")
 	switch cacheType {
 	case LRUCache:
 		return newThreadSafeCache(newLRU(size))

@@ -47,6 +47,7 @@ type regionTree struct {
 }
 
 func newRegionTree() *regionTree {
+	log.Infof("new regionTree")
 	return &regionTree{
 		tree: btree.New(defaultBTreeDegree),
 	}
@@ -134,6 +135,7 @@ func (t *regionTree) find(region *metapb.Region) *regionItem {
 }
 
 func (t *regionTree) scanRange(startKey []byte, f func(*metapb.Region) bool) {
+	log.Infof("regionTree scan range with startKey[%s]", startKey)
 	startItem := &regionItem{region: &metapb.Region{StartKey: startKey}}
 	t.tree.AscendGreaterOrEqual(startItem, func(item btree.Item) bool {
 		return f(item.(*regionItem).region)
